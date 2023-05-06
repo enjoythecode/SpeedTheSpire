@@ -1,0 +1,6 @@
++ see if I can disable control away from CommMod when in combat
+    - desired behavior: upon launch, CommMod autostarts external process, which executes commands
+    until we are in a fight, and then my patches to CommMod stop it from communicating.
+- see if I can fake out the CommunicationMod with my LudicrousCommunicationController during combat (oooo)
+    - first, have my own controller for faking out CommunicationMod stuff
+    - then, activate/deactivate Ludicrous within setActive()
