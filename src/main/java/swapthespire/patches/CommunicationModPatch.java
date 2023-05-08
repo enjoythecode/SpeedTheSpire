@@ -1,4 +1,4 @@
-package communicationmod.patches;
+package swapthespire.patches;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;

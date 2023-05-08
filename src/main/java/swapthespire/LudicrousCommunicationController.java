@@ -1,20 +1,24 @@
-/*
-package communicationmod;
+package swapthespire;
 
+import swapthespire.SwapTheSpire;
 import ludicrousspeed.Controller;
-import communicationmod.CommunicationMod.listenForMessageAndExecute;
-import communicationmod.CommunicationMod.sendGameState;
+
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+
+import static communicationmod.CommunicationMod.waitForMessageAndExecute;
+import static communicationmod.CommunicationMod.sendGameState;
 
 public class LudicrousCommunicationController implements Controller {
 
+    public LudicrousCommunicationController(){
+    }
+
     public void step() {
-        listenForMessageAndExecute();
         sendGameState();
+        waitForMessageAndExecute();
     }
 
     public boolean isDone() {
-        return false;
+        return !SwapTheSpire.controlShouldBeInLudicrous();
     }
-
 }
-*/
