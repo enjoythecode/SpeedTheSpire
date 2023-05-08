@@ -2,6 +2,7 @@ package swapthespire;
 
 import basemod.*;
 import basemod.interfaces.PostInitializeSubscriber;
+import basemod.interfaces.PreStartGameSubscriber;
 import basemod.interfaces.PostDungeonInitializeSubscriber;
 import basemod.interfaces.PreUpdateSubscriber;
 import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
@@ -21,7 +22,7 @@ import static ludicrousspeed.LudicrousSpeedMod.controller;
 import static ludicrousspeed.LudicrousSpeedMod.plaidMode;
 
 @SpireInitializer
-public class SwapTheSpire implements PostInitializeSubscriber, PostDungeonInitializeSubscriber, PreUpdateSubscriber {
+public class SwapTheSpire implements PostInitializeSubscriber, PostDungeonInitializeSubscriber, PreUpdateSubscriber, PreStartGameSubscriber  {
     
     private static final Logger logger = LogManager.getLogger(SwapTheSpire.class.getName());    
 
@@ -140,6 +141,19 @@ public class SwapTheSpire implements PostInitializeSubscriber, PostDungeonInitia
         if (active != desired) {
             SwapTheSpire.setActive(desired);
         }
+    }
+
+    public void receivePreStartGame() {
+        String seedFlag = System.getProperty("seed");
+        // code imitated from megacrit.cardcrawl.helpers.SeedHelper:setSeed
+        if(seedFlag != null){
+            logger.info("SpeedTheSpire seed flag was set; using this seed: " + seedFlag);
+            Settings.seedSet = true;
+            Settings.seed = Long.valueOf(seedFlag);
+            Settings.specialSeed = null;
+            Settings.isDailyRun = false;
+        }
+        
     }
 
     public void receivePostDungeonInitialize() {
