@@ -24,7 +24,8 @@ import static ludicrousspeed.LudicrousSpeedMod.plaidMode;
 @SpireInitializer
 public class SwapTheSpire implements PostInitializeSubscriber, PostDungeonInitializeSubscriber, PreUpdateSubscriber, PreStartGameSubscriber  {
     
-    private static final Logger logger = LogManager.getLogger(SwapTheSpire.class.getName());    
+    private static final Logger logger = LogManager.getLogger(SwapTheSpire.class.getName());
+    private boolean exitOnNewGameStart = false;
 
     private static LudicrousCommunicationController ludicCommControllerInstance;
 
@@ -147,6 +148,16 @@ public class SwapTheSpire implements PostInitializeSubscriber, PostDungeonInitia
         String seedFlag = System.getProperty("seed");
         // code imitated from megacrit.cardcrawl.helpers.SeedHelper:setSeed
         if(seedFlag != null){
+            
+            // when running a seeded run, we want to exit before the new game runs to prevent constantly looping
+            // to do this, we exitOnNewGameStart the first time this preStartGame is received, and the second time, 
+            // we exit.
+            if (exitOnNewGameStart) {
+                logger.info("Exiting the game because a seeded game is about to start again");
+                // we had a seeded run and this is the second time we are starting a game; just exit the whole process.
+                System.exit(0);
+            }
+            exitOnNewGameStart = true;
             logger.info("SpeedTheSpire seed flag was set; using this seed: " + seedFlag);
             Settings.seedSet = true;
             Settings.seed = Long.valueOf(seedFlag);
