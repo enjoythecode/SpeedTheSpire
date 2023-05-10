@@ -41,7 +41,7 @@ public class RestartOnGameEndPatch {
         }
 
     }
-
+    /*
     @SpirePatch(
             clz= DeathScreen.class,
             paramtypez = {MonsterGroup.class},
@@ -63,16 +63,17 @@ public class RestartOnGameEndPatch {
             return SpireReturn.Return(null);
         }
     }
-
+    */
+    /*
     @SpirePatch(
             clz= DeathScreen.class,
             method="update"
     )
     public static class DontUpdateDeathScreen {
         public static SpireReturn Prefix() {
-            logger.info("skipping death screen update because we should be in main menu soon");
             return SpireReturn.Return(null);
         }
     }
+    */
     
 }

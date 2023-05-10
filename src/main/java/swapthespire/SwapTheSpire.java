@@ -1,5 +1,7 @@
 package swapthespire;
 
+import swapthespire.InJavaCommunicationController;
+
 import basemod.*;
 import basemod.interfaces.PostInitializeSubscriber;
 import basemod.interfaces.PreStartGameSubscriber;
@@ -26,6 +28,7 @@ public class SwapTheSpire implements PostInitializeSubscriber, PostDungeonInitia
     
     private static final Logger logger = LogManager.getLogger(SwapTheSpire.class.getName());
     private boolean exitOnNewGameStart = false;
+    private static long gameDurationTimestamp = -1;
 
     private static LudicrousCommunicationController ludicCommControllerInstance;
 
@@ -42,6 +45,12 @@ public class SwapTheSpire implements PostInitializeSubscriber, PostDungeonInitia
     
     public SwapTheSpire(){
         BaseMod.subscribe(this);
+
+        String character = System.getProperty("character");
+        if(character != null) {
+            InJavaCommunicationController ijcc = new InJavaCommunicationController(new AgentRandom());
+            ijcc.playOneGameWithCharacter(character);
+        }
     }
 
     public static void initialize(){
@@ -144,7 +153,26 @@ public class SwapTheSpire implements PostInitializeSubscriber, PostDungeonInitia
         }
     }
 
+    public static void gameDurationStopwatch() {
+        if (gameDurationTimestamp == -1){
+            // https://stackoverflow.com/a/692586
+            gameDurationTimestamp = System.nanoTime();  
+        } else {
+            // time delta formatting from: https://stackoverflow.com/a/45075606
+
+            long nanos = System.nanoTime() - gameDurationTimestamp;
+            long tempSec    = nanos/(1000*1000*1000);
+            long sec        = tempSec;
+
+            logger.info(" > > > > > > > > > GAME SIMULATION TOOK = " + Long.toString(tempSec) + " SECONDS < < < < < < < < <");
+
+            gameDurationTimestamp = System.nanoTime();
+        }
+    }
+
     public void receivePreStartGame() {
+        SwapTheSpire.gameDurationStopwatch();
+
         String seedFlag = System.getProperty("seed");
         // code imitated from megacrit.cardcrawl.helpers.SeedHelper:setSeed
         if(seedFlag != null){

@@ -13,7 +13,13 @@
 
     <!-- These are the dependencies that were placed in the libs folder.
          Try to keep the version numbers the same as from their GitHub.  -->
+
     <dependencies>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
         <dependency>
             <groupId>com.megacrit.cardcrawl</groupId>
             <artifactId>slaythespire</artifactId>
