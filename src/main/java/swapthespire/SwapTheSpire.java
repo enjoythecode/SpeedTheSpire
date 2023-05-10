@@ -46,11 +46,13 @@ public class SwapTheSpire implements PostInitializeSubscriber, PostDungeonInitia
     public SwapTheSpire(){
         BaseMod.subscribe(this);
 
-        String character = System.getProperty("character");
-        if(character != null) {
+        String mode = System.getProperty("mode");
+        // this is not working for some reason and i can't be fucked to debug why.
+        // if (mode == "random") {
+            logger.debug("initing ijcc");
             InJavaCommunicationController ijcc = new InJavaCommunicationController(new AgentRandom());
-            ijcc.playOneGameWithCharacter(character);
-        }
+        //}
+        
     }
 
     public static void initialize(){

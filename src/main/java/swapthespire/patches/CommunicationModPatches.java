@@ -11,7 +11,10 @@ import communicationmod.CommunicationMod;
 import swapthespire.SwapTheSpire;
 
 import ludicrousspeed.simulator.commands.CardRewardSelectCommand;
+import ludicrousspeed.simulator.commands.HandSelectCommand;
 import ludicrousspeed.simulator.commands.HandSelectConfirmCommand;
+import ludicrousspeed.simulator.commands.GridSelectCommand;
+import ludicrousspeed.simulator.commands.GridSelectConfrimCommand;
 
 public class CommunicationModPatches {
 
@@ -57,13 +60,50 @@ public class CommunicationModPatches {
         }
     }
 
-    // The following would be in the same nature as the above and below patches (redirect to Ludicrous for these commands
-    // if they are encountered in CommunicationMod.ChoiceScreenUtils while Ludicrous is active). However, some of them might
-    // not be necessary, and I would rather not make code changes until I have a test case for them, so I am not going to 
-    // implement them right away.
-    // TODO: HAND SELECT COMMAND
-    // TODO: GRID SELECT COMMAND
-    // TODO: GRID SELECT CONFIRM COMMAND
+    @SpirePatch(
+        clz=ChoiceScreenUtils.class,
+        paramtypez={int.class},
+        method="makeGridScreenChoice"
+    )
+    public static class RedirectGridRewardCommandExecutionToLudicrousIfLudicrousIsActive {
+        public static SpireReturn Prefix(int choice) {
+            if(!SwapTheSpire.allowCommunicationMod()){
+                new GridSelectCommand(choice).execute();
+                return SpireReturn.Return(null);
+            }
+            return SpireReturn.Continue();
+        }
+    }
+
+    @SpirePatch(
+        clz=ChoiceScreenUtils.class,
+        method="clickGridScreenConfirmButton"
+    )
+    public static class RedirectGridScreenConfirmExecutionToLudicrousIfLudicrousIsActive {
+        public static SpireReturn Prefix() {
+            if(!SwapTheSpire.allowCommunicationMod()){
+                GridSelectConfrimCommand.INSTANCE.execute(); // [typo present in LudicrousSpeed]
+                return SpireReturn.Return(null);
+            }
+            return SpireReturn.Continue();
+        }
+    }
+
+    @SpirePatch(
+        clz=ChoiceScreenUtils.class,
+        paramtypez={int.class},
+        method="makeHandSelectScreenChoice"
+    )
+    public static class RedirectHandSelectCommandExecutionToLudicrousIfLudicrousIsActive {
+        public static SpireReturn Prefix(int choice) {
+            if(!SwapTheSpire.allowCommunicationMod()){
+                new HandSelectCommand(choice).execute();
+                return SpireReturn.Return(null);
+            }
+            return SpireReturn.Continue();
+        }
+    }
+
 
     @SpirePatch(
         clz=ChoiceScreenUtils.class,

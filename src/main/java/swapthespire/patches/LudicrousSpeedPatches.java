@@ -25,7 +25,7 @@ import ludicrousspeed.simulator.patches.ServerStartupPatches;
  */
 
 public class LudicrousSpeedPatches {
-    private static final Logger logger = LogManager.getLogger(  RestartOnGameEndPatch.class.getName());
+    private static final Logger logger = LogManager.getLogger(  LudicrousSpeedPatches.class.getName());
 
     @SpirePatch(
             clz= ServerStartupPatches.GameStartupPatch.class,

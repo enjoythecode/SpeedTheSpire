@@ -25,9 +25,17 @@ public class InJavaCommunicationController implements CommunicationModStateRecei
 
     private AgentI agent;
 
+    private ArrayList<String> characters;
+    private int character_i;
+
     public InJavaCommunicationController(AgentI agent){
+                    logger.debug(" ijcc init");
         CommunicationMod.subscribeToGameStates(this);
         this.agent = agent;
+        this.characters = new ArrayList<String>();
+        this.characters.add("ironclad");
+        this.characters.add("defect");
+        this.character_i = 0;
     }
 
     // Interface: CommunicationModStateReceiverI
@@ -39,29 +47,31 @@ public class InJavaCommunicationController implements CommunicationModStateRecei
         CommunicationMod.executeMessage(command);
     }
 
-    public void playOneGameWithCharacter(String character) {
-        wantToPlay = character;
-    }
-
     /*
      * Receives a game state in JSON string format, and returns the next action as a string.
      */
     public void receiveAndRespond(String gameState) {
-        logger.debug("Received game state, computing response...");
+        logger.info("Received game state. ");
+
+        if(JsonParser.parseString(gameState).getAsJsonObject().has("error")){
+            logger.error("CommMod reports an error! " + gameState);
+            return;
+        }
         
         GameState gs = new GameState(gameState);
 
-        if(gs.availableCommands.contains("start") && wantToPlay != null){
-            String temp = wantToPlay;
-            wantToPlay = null;
-            send("start " + temp);
+        if(gs.availableCommands.contains("start")){
+            this.character_i += 1;
+            if (this.character_i >= this.characters.size()){
+                this.character_i = 0;
+            }
+            String character = characters.get(this.character_i);
+
+            send("start " + character);
             return;
         }
 
-        if(gs.communicationState.has("error")) {
-            logger.error("IN JAVA COMMUNICATION CONTROLLER WAS INFORMED OF AN ERROR, NOT SENDING ANYTHING");
-            return;
-        }
+        
 
         if (this.agent == null){
             logger.error("InJavaCommunicationController can't work without an agent!");

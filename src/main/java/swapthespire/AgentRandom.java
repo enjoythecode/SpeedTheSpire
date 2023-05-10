@@ -15,7 +15,8 @@ public class AgentRandom implements AgentI {
 
         if (pool.size() == 0){
             logger.warn("AgentRandom couldn't find any valid actions, so it will stall");
-            return "wait 50000";
+            logger.warn("available commands were: " + gs.availableCommands); 
+            return "wait 500000";
         }
 
         int choice_index = random.nextInt(pool.size());

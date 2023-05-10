@@ -5,7 +5,6 @@ import ludicrousspeed.Controller;
 
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 
-import static communicationmod.CommunicationMod.waitForMessageAndExecute;
 import static communicationmod.CommunicationMod.sendGameState;
 
 public class LudicrousCommunicationController implements Controller {
@@ -15,7 +14,6 @@ public class LudicrousCommunicationController implements Controller {
 
     public void step() {
         sendGameState();
-        waitForMessageAndExecute();
     }
 
     public boolean isDone() {
