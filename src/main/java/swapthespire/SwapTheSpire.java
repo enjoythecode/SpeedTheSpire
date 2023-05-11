@@ -163,10 +163,9 @@ public class SwapTheSpire implements PostInitializeSubscriber, PostDungeonInitia
             // time delta formatting from: https://stackoverflow.com/a/45075606
 
             long nanos = System.nanoTime() - gameDurationTimestamp;
-            long tempSec    = nanos/(1000*1000*1000);
-            long sec        = tempSec;
-
-            logger.info(" > > > > > > > > > GAME SIMULATION TOOK = " + Long.toString(tempSec) + " SECONDS < < < < < < < < <");
+            long milliSec    = nanos/(1000*1000);
+            
+            logger.info(" > > > > > > > > > GAME SIMULATION TOOK = " + Long.toString(milliSec) + " MS < < < < < < < < <");
 
             gameDurationTimestamp = System.nanoTime();
         }
