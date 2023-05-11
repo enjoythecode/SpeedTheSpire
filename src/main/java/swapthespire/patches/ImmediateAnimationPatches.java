@@ -32,7 +32,7 @@ import ludicrousspeed.simulator.patches.ScreenPatches;
 /* We set the animation timers to small amounts because setting them to 0 seems to totally override the ability to skip actually do the logic needed*/
 public class ImmediateAnimationPatches {
     private static final Logger logger = LogManager.getLogger(  ImmediateAnimationPatches.class.getName());
-
+/*
     @SpirePatch(
             clz= DeathScreen.class,
             method="update"
@@ -67,8 +67,6 @@ public class ImmediateAnimationPatches {
         }
     }
 
-    
-
     @SpirePatch(
             clz= CardCrawlGame.class,
             method="updateFade"
@@ -84,7 +82,7 @@ public class ImmediateAnimationPatches {
             return SpireReturn.Continue();
         }
     }
-
+*/
     @SpirePatch(
             clz= ScreenPatches.DisableDeathScreenpatch.class,
             paramtypez = {DeathScreen.class, MonsterGroup.class},
@@ -94,7 +92,7 @@ public class ImmediateAnimationPatches {
     public static class PreventLudicrousFromStartingOverOnDeath {
         public static SpireReturn Prefix(DeathScreen _instance, MonsterGroup monsterGroup) {
             logger.info("I am patching a patch. What has my life come to?");
-            return SpireReturn.Continue();
+            return SpireReturn.Return(SpireReturn.Continue());
         }
 
     }

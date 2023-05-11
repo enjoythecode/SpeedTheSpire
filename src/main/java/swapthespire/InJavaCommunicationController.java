@@ -17,7 +17,6 @@ import communicationmod.CommunicationModStateReceiverI;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 public class InJavaCommunicationController implements CommunicationModStateReceiverI{
     
     private static final Logger logger = LogManager.getLogger(InJavaCommunicationController.class.getName());
