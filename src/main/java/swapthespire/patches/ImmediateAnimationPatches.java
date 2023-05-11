@@ -96,29 +96,7 @@ public class ImmediateAnimationPatches {
         }
 
     }
-    /*
-    @SpirePatch(
-            clz= DeathScreen.class,
-            paramtypez = {MonsterGroup.class},
-            method=SpirePatch.CONSTRUCTOR
-    )
-    public static class StartOverOnDeath {
-        // Modeled after screens.DeathScreen.update:666
-        public static SpireReturn Prefix(DeathScreen _instance, MonsterGroup monsterGroup) {
-            logger.info("we dead'ed, starting over immediately");
-            Settings.isTrial = false;
-            Settings.isDailyRun = false;
-            Settings.isEndless = false;
-            CardCrawlGame.trial = null;
-            CardCrawlGame.playCreditsBgm = false;
-
-            // reset the game, causing a restart
-            CardCrawlGame.startOver();
-
-            return SpireReturn.Return(null);
-        }
-    }
-    */
+    
     /*
     @SpirePatch(
             clz= DeathScreen.class,
