@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class AgentRandom implements AgentI {
-    private static Random random = new Random();
+    private static Random random = new Random((long)42);
     private static final Logger logger = LogManager.getLogger(AgentRandom.class.getName());
 
     public String receiveAndRespond(GameState gs) {
