@@ -104,12 +104,14 @@ public class SwapTheSpire implements PostInitializeSubscriber, PostDungeonInitia
 
         if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
             // we want to switch out of this controller when the enemies are dead
-            boolean areMonstersDead = AbstractDungeon.getMonsters().areMonstersDead();
-            boolean battleNotRegisteredAsOver = !AbstractDungeon.getCurrRoom().isBattleOver;
-            boolean couldLoseCurrentRoom = !AbstractDungeon.getCurrRoom().cannotLose;
+            if (AbstractDungeon.getMonsters() != null){
+                boolean areMonstersDead = AbstractDungeon.getMonsters().areMonstersDead();
+                boolean battleNotRegisteredAsOver = !AbstractDungeon.getCurrRoom().isBattleOver;
+                boolean couldLoseCurrentRoom = !AbstractDungeon.getCurrRoom().cannotLose;
 
-            if (areMonstersDead && battleNotRegisteredAsOver && couldLoseCurrentRoom){
-                return InControl.COMMUNICATION_MOD;
+                if (areMonstersDead && battleNotRegisteredAsOver && couldLoseCurrentRoom){
+                    return InControl.COMMUNICATION_MOD;
+                }
             }
         }
 
